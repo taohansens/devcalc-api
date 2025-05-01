@@ -52,3 +52,5 @@ devcalc-api
             └── com.devcalc
                └── DevCalcApplicationTests.java
 ```
+
+Test Workflow: README EDITADO / Não deve executar
