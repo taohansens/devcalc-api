@@ -1,0 +1,44 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'src/**'
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+  build:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build project
+        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+        run: mvn clean install
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Run tests
+        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+        run: mvn test
