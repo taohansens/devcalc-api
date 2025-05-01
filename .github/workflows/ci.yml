@@ -10,35 +10,43 @@ on:
 
 jobs:
   checkout:
+    name: Checkout Code
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
   build:
-    needs: checkout
+    name: Build Project
     runs-on: ubuntu-latest
+
     steps:
-      - name: Set up Java
-        uses: actions/setup-java@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Build project
-        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+      - name: Build with Maven
         run: mvn clean install
 
   test:
-    needs: build
+    name: Run Tests
     runs-on: ubuntu-latest
+
     steps:
-      - name: Set up Java
-        uses: actions/setup-java@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Run tests
-        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+      - name: Run Tests
         run: mvn test
