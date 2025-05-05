@@ -10,6 +10,7 @@ on:
       - synchronize
     paths:
       - 'src/**'
+  workflow_dispatch:
 
 jobs:
   checkout:
