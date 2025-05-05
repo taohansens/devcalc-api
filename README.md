@@ -58,4 +58,52 @@ devcalc-api
                └── CalculatorServiceTest.java
 ```
 
-Test Workflow: README EDITADO / Não deve executar
+## Workflows Automatizados
+
+O projeto utiliza **GitHub Actions** para gerenciar os pipelines de **Integração Contínua (CI)** e **Entrega Contínua (CD)**. Abaixo estão as etapas automatizadas configuradas no workflow.
+
+### Gatilhos
+O pipeline é executado automaticamente nos seguintes eventos:
+- **Push**: Qualquer commit enviado para a branch `main`.
+- **Pull Request**: Abertura ou atualização de pull requests que modificam arquivos no diretório `src/`.
+- **Execução Manual**: O workflow pode ser acionado manualmente pela interface do GitHub utilizando o evento `workflow_dispatch`.
+
+### Etapas do Pipeline
+1. **Checkout**
+   - Faz o download do repositório.
+2. **Build**
+   - Configura o ambiente com **Java 17** e compila o projeto usando o comando `mvn clean install`.
+3. **Test**
+   - Executa os testes automatizados definidos no projeto com `mvn test`.
+4. **Package**
+   - Gera o arquivo `.jar` da aplicação usando o comando `mvn package`.
+5. **Deploy**
+   - Exibe a mensagem `Deploy realizado com sucesso` para simular o processo de entrega contínua.
+
+### Visualização do Workflow
+As dependências entre os jobs garantem que os passos sejam executados na ordem correta:
+- `Test` depende de `Build`.
+- `Package` depende de `Build` e `Test`.
+- `Deploy` depende de `Package`.
+
+Os workflows garantem a validação do código e o empacotamento antes de qualquer entrega, facilitando a integração contínua.
+
+### Como Executar Manualmente
+1. Acesse a aba **Actions** no GitHub.
+2. Selecione o workflow **CI Pipeline**.
+3. Clique em **Run Workflow** e escolha a branch para iniciar a execução manualmente.
+
+## Workflows Secundários
+
+Além do pipeline principal de CI/CD, o projeto também inclui o workflow **Show Message Pipeline**, que é responsável por exibir uma mensagem simples como parte do fluxo de trabalho.
+
+### Gatilhos
+O workflow é executado automaticamente nos seguintes eventos:
+- **Push**: Qualquer commit enviado para a branch `main`.
+- **Pull Request**: Abertura ou atualização de pull requests na branch `main`.
+
+### Etapas do Workflow
+1. **Checkout**
+   - Faz o download do código do repositório.
+2. **Print Message**
+   - Exibe a mensagem: `Pipeline iniciado com sucesso`.
