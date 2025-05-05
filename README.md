@@ -44,13 +44,18 @@ A organização do código segue a estrutura padrão do **Spring Boot**:
 devcalc-api
 └── src
     ├── main
-    │   ├── java
-    │   │   └── com.devcalc
-    │   │       └── DevCalcApplication.java
+    │   └── java
+    │       └── com.devcalc
+    |           ├── controllers
+    |           |   └── CalculatorController.java
+    |           ├── services
+    |           |   └── CalculatorService.java
+    │           └── DevCalcApplication.java
     └── test
         └── java
             └── com.devcalc
-               └── DevCalcApplicationTests.java
+               ├── DevCalcApplicationTests.java
+               └── CalculatorServiceTest.java
 ```
 
 Test Workflow: README EDITADO / Não deve executar
