@@ -53,3 +53,33 @@ jobs:
 
       - name: Run Tests
         run: mvn test
+
+  package:
+    name: Package Application
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - test
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Package with Maven
+        run: mvn package
+
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    needs:
+      - package
+
+    steps:
+      - name: Deploy Success Message
+        run: echo "Deploy realizado com sucesso"
