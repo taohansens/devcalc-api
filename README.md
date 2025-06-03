@@ -1,3 +1,5 @@
+[![CI Pipeline](https://github.com/taohansens/devcalc-api/actions/workflows/ci.yml/badge.svg)](https://github.com/taohansens/devcalc-api/actions/workflows/ci.yml)
+
 # DevCalc API
 
 ## Objetivo do Projeto
@@ -110,6 +112,10 @@ O workflow é executado automaticamente nos seguintes eventos:
 
 
 --------
+### TP2
+
+[![CI Pipeline](https://github.com/taohansens/devcalc-api/actions/workflows/ci.yml/badge.svg)](https://github.com/taohansens/devcalc-api/actions/workflows/ci.yml)
+
 
 No commit ec032d10a5b78c0ed19191ca97ba41656581226e, foi introduzido um erro proposital:
 ```
@@ -129,3 +135,14 @@ Run exit 1
 Error: Process completed with exit code 1.
 ```
 Após identificar o erro, o comando incorreto foi corrigido no arquivo ci.yml, e o novo commit realizado com a correção.
+
+### Execução Automática / Manual
+A execução automática do pipeline ocorre sempre que há um push/pull na branch main, garantindo que todas as alterações 
+no código passem imediatamente pelo fluxo de CI/CD. 
+
+Já a execução manual via botão "Run workflow" permite um controle mais refinado, possibilitando testes 
+específicos sem necessidade de um commit, além da configuração de parâmetros adicionais, como execução seletiva de testes, 
+como foi feito com o linting/test com inputs.
+
+Enquanto a verificação automática favorece a automação e a consistência na integração contínua, o acionamento manual é mais flexível, 
+sendo útil para depuração e análise detalhada antes da incorporação das mudanças no repositório.
