@@ -107,3 +107,25 @@ O workflow é executado automaticamente nos seguintes eventos:
    - Faz o download do código do repositório.
 2. **Print Message**
    - Exibe a mensagem: `Pipeline iniciado com sucesso`.
+
+
+--------
+
+No commit ec032d10a5b78c0ed19191ca97ba41656581226e, foi introduzido um erro proposital:
+```
+   - name: Package with Maven
+      run: exit 1
+```
+
+O erro foi detectado através da aba Actions no GitHub. Em que foi possível ver o workflow que falhou, expandir o Job, e analisar o log que consta:
+```
+Package with Maven 0s
+Run exit 1
+  exit 1
+  shell: /usr/bin/bash -e {0}
+  env:
+    JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.15-6/x64
+    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.15-6/x64
+Error: Process completed with exit code 1.
+```
+Após identificar o erro, o comando incorreto foi corrigido no arquivo ci.yml, e o novo commit realizado com a correção.
