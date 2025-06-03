@@ -47,7 +47,8 @@ jobs:
           distribution: 'adopt'
 
       - name: Package with Maven
-        run: mvn package
+#        run: mvn package
+        run: exit 1
 
   deploy:
     name: Deploy Application
