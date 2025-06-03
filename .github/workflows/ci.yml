@@ -11,56 +11,30 @@ on:
     paths:
       - 'src/**'
   workflow_dispatch:
+    inputs:
+      run_lint:
+        description: 'Lint'
+        required: false
+        default: true
+        type: boolean
+      run_tests:
+        description: 'Test'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
-  checkout:
-    name: Checkout Code
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-  build:
-    name: Build Project
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Build with Maven
-        run: mvn clean install
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Run Tests
-        run: mvn test
+  lint-and-test:
+    uses: ./.github/workflows/lint-and-test.yml
+    with:
+      run_lint: ${{ inputs.run_lint }}
+      run_tests: ${{ inputs.run_tests }}
 
   package:
     name: Package Application
     runs-on: ubuntu-latest
     needs:
-      - build
-      - test
+      - lint-and-test
 
     steps:
       - name: Checkout Repository
@@ -79,8 +53,8 @@ jobs:
     name: Deploy Application
     runs-on: ubuntu-latest
     needs:
+      - lint-and-test
       - package
-
     steps:
       - name: Deploy Success Message
         run: echo "Deploy realizado com sucesso"
