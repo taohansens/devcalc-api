@@ -39,6 +39,7 @@ Antes de iniciar a API, certifique-se de ter instalado:
     - `GET /subtract?a=10&b=5` → Retorna `5`
     - `GET /multiply?a=10&b=5` → Retorna `50`
     - `GET /divide?a=10&b=5` → Retorna `2`
+    - `GET /sqrt?x=16` → Retorna `4.0`
 
 ## Estrutura do Projeto
 A organização do código segue a estrutura padrão do **Spring Boot**:
@@ -146,3 +147,8 @@ como foi feito com o linting/test com inputs.
 
 Enquanto a verificação automática favorece a automação e a consistência na integração contínua, o acionamento manual é mais flexível, 
 sendo útil para depuração e análise detalhada antes da incorporação das mudanças no repositório.
+
+-------
+### TP3
+Criação do endpoint sqrt.
+Arquivos yml dos workflow disponíveis na pasta .github, demais evidências no PDF entregue.
