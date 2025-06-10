@@ -18,7 +18,7 @@ jobs:
       - name: Info do Sistema
         run: |
           echo "=== System Information ==="
-          hostname-ctl
+          hostnamectl
           echo ""
 
       - name: Check Java version (if available)
