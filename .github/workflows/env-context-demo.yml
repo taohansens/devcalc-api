@@ -1,0 +1,101 @@
+name: Environment Context
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  STAGE: test
+  WORKFLOW_LEVEL_VAR: "definida-no-workflow"
+  GLOBAL_CONFIG: "production-ready"
+
+jobs:
+  context-demo:
+    runs-on: self-hosted
+
+    env:
+      STAGE: test-job
+      JOB_LEVEL_VAR: "definida-no-job"
+      BUILD_ENV: "continuous-integration"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Exibir Contextos GitHub
+        run: |
+          echo "========================================="
+          echo "         CONTEXTOS GITHUB"
+          echo "========================================="
+          echo ""
+          echo "Usuário: ${{ github.actor }}"
+          echo "Sistema operacional: ${{ runner.os }}"
+          echo "Repositório: ${{ github.repository }}"
+          echo "Branch/Ref: ${{ github.ref }}"
+          echo "Evento: ${{ github.event_name }}"
+          echo "Run ID: ${{ github.run_id }}"
+          echo "Run Number: ${{ github.run_number }}"
+          echo "Timestamp: $(date)"
+
+      - name: Variáveis Nível WORKFLOW
+        run: |
+          echo "========================================="
+          echo "         NIVEL WORKFLOW"
+          echo "========================================="
+          echo ""
+          echo "Env no nível do workflow:"
+          echo "  STAGE: $STAGE"
+          echo "  WORKFLOW_LEVEL_VAR: $WORKFLOW_LEVEL_VAR"
+          echo "  GLOBAL_CONFIG: $GLOBAL_CONFIG"
+          echo ""
+          echo "Nota: STAGE foi definida como 'test' no workflow"
+          echo "Valor atual: $STAGE (pode ter sido sobrescrita)" 
+
+      - name: Variáveis Nível JOB
+        run: |
+          echo "========================================="
+          echo "             NIVEL JOB"
+          echo "========================================="
+          echo ""
+          echo "Env no nível do JOB:"
+          echo "  STAGE: $STAGE"
+          echo "  JOB_LEVEL_VAR: $JOB_LEVEL_VAR"
+          echo "  BUILD_ENV: $BUILD_ENV"
+          echo ""
+          echo "Variáveis herdadas do workflow:"
+          echo "  WORKFLOW_LEVEL_VAR: $WORKFLOW_LEVEL_VAR"
+          echo "  GLOBAL_CONFIG: $GLOBAL_CONFIG"
+          echo ""
+          echo "Demonstração Sobrescrita:"
+          echo "  STAGE original (workflow): test"
+          echo "  STAGE atual (job): $STAGE"
+          
+      - name: Variáveis Nível STEP
+        env:
+          STAGE: test-step-1
+          STEP_LEVEL_VAR: "definida-no-step-1"
+          CUSTOM_MESSAGE: "Olá do Step 1!"
+        run: |
+          echo "========================================="
+          echo "       NÍVEL STEP"
+          echo "========================================="
+          echo ""
+          echo "  STAGE: $STAGE"
+          echo "  STEP_LEVEL_VAR: $STEP_LEVEL_VAR"
+          echo "  CUSTOM_MESSAGE: $CUSTOM_MESSAGE"
+          echo ""
+          echo "Variáveis herdadas:"
+          echo "  WORKFLOW_LEVEL_VAR: $WORKFLOW_LEVEL_VAR"
+          echo "  JOB_LEVEL_VAR: $JOB_LEVEL_VAR"
+          echo "  BUILD_ENV: $BUILD_ENV"
+          echo "  GLOBAL_CONFIG: $GLOBAL_CONFIG"
+          echo ""
+          echo "Comparação:"
+          echo "  1. Workflow: test"
+          echo "  2. Job: test-job"
+          echo "  3. Step atual: $STAGE"]
+          echo ""
+          echo " HIERARQUIA CONFIRMADA:  1. Step > Job > Workflow"
