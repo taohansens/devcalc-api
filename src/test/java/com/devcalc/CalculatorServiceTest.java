@@ -64,4 +64,14 @@ class CalculatorServiceTest {
 
         Assertions.assertThrows(ArithmeticException.class, () -> calculator.divide(a, b));
     }
+
+    @Test
+    public void testSqrt() {
+        int x = 16;
+        double expectedResult = 4.0;
+
+        double result = calculator.sqrt(x);
+
+        Assertions.assertEquals(expectedResult, result);
+    }
 }

@@ -38,4 +38,13 @@ public class CalculatorController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping("/sqrt")
+    public double divide(@RequestParam int x) {
+        try {
+            return calculator.sqrt(x);
+        } catch (ArithmeticException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
