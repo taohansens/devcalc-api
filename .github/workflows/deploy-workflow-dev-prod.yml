@@ -1,0 +1,46 @@
+name: Deploy env prod e dev
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+  pull_request:
+    branches:
+      - dev
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy-dev:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: self-hosted
+    environment:
+      name: dev
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Dev
+        run: |
+          echo "Deploying to Dev..."
+          echo "Using variables: ${{ secrets.DEV_VARIABLE }}"
+          env:
+            DEV_VARIABLE: ${{ secrets.DEV_VARIABLE }} 
+
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: self-hosted
+    environment:
+      name: prod
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Prod
+        run: |
+          echo "Deploying to Prod..."
+          echo "Using secrets: ${{ secrets.PROD_SECRET }}"
+          env:
+            PROD_SECRET: ${{ secrets.PROD_SECRET }}
+
