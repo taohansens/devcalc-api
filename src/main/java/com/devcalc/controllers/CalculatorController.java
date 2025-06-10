@@ -40,7 +40,7 @@ public class CalculatorController {
     }
 
     @GetMapping("/sqrt")
-    public double divide(@RequestParam int x) {
+    public double sqrt(@RequestParam int x) {
         try {
             return calculator.sqrt(x);
         } catch (ArithmeticException e) {
